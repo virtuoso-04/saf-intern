@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Small Arms Factory</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Admin Dashboard</h1>
+    </header>
+
+    <main>
+        <h2>Complaints List</h2>
+
+        <!-- Table to display complaints -->
+        <table>
+            <thead>
+                <tr>
+                    <th>complaint ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Subject</th>
+                    <th>Description</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Update status</th>                    
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            {% if complaints %}
+                {% for complaint in complaints %} 
+            <tbody>
+                <tr>
+                    <td>{{ complaint.id }}</td>
+                    <td>{{ complaint.name }}</td>
+                    <td>{{ complaint.email }}</td>
+                    <td>{{ complaint.subject }}</td>
+                    <td>{{ complaint.description }}</td>
+                    <td>{{ complaint.priority }}</td>
+                    <td>{{ complaint.status }}</td>
+                    <td> 
+                        <form method="POST" action="{{ url_for('update_complaint', complaint_id=complaint.id,new_status=status) }}" style="display:inline-block;"id="cry"> 
+                            <!-- <input type="text" name="status"><br>  -->
+                            <select name="status">
+                                <option value="Open">Open</option>
+                                <option value="In Progresss" >In Progress</option>
+                                <option value="Closed">Closed</option> 
+                            </select>  
+                        <button type="submit" class="btn update-btn">Update</button>
+                        </form>
+                        
+                    </td>
+                    <td>
+                        <form method="POST" action="{{ url_for('delete_complaint', complaint_id=complaint.id) }}" style="display:inline-block;">
+                        <button type="submit" class="btn delete-btn">Delete</button>
+                        </form>
+                    </td> 
+                    
+                    
+                </tr>
+            </tbody>
+            {% endfor %}
+        {% else %}
+            <p>No complaints have been submitted.</p>
+        {% endif %} 
+        </table>
+
+    </main>
+   <footer>
+        <p>&copy; {{ current_year }} Small Arms Factory Kanpur. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

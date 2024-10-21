@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaints - Small Arms Factory</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Complaints Notice Board</h1>
+    </header>
+
+    <main>
+        {% if complaints %}
+            <h2>List of Submitted Complaints</h2>
+            <table class="complaints-table">
+                <thead>
+                    <tr>
+                        <th>Serial No</th>
+                        <th>Complaint ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Subject</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for complaint in complaints %}
+                    <tr>
+                        <td>{{ loop.index }}</td> 
+                        <td>{{ complaint.id }}</td>
+                        <td>{{ complaint.name }}</td>
+                        <td>{{ complaint.email }}</td>
+                        <td>{{ complaint.subject }}</td>
+                        <td>{{ complaint.priority }}</td>
+                        <td>{{ complaint.status }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No complaints have been submitted yet.</p>
+        {% endif %}
+    </main>
+</body>
+</html>

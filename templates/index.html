@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Small Arms Factory Kanpur</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">  
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.png') }}" type="image/png">
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="SAFLogo" class="logo">
+        <img src="{{ url_for('static', filename='images/logo1.png') }}" alt="IndiaLogo" class="logo1">
+        <h2>Welcome to Small Arms Factory Kanpur </h2>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="https://ddpdoo.gov.in/units/SAF">Home</a></li>
+            <li><a href="{{ url_for('complaints') }}">View Complaints</a></li>
+            <li><a href="{{ url_for('admin_login') }}">Admin Login</a></li>
+        </ul>
+    </nav>
+    <hero>
+        <img src="{{ url_for('static' , filename='images/gunss.jpg')}}" alt="image" class="image/png">
+    </hero>
+
+    <main>
+        <div class="complaint-container">
+            <h2>Submit Your Complaint</h2>
+            <form method="POST" action="{{ url_for('index') }}">  
+                {{ form.hidden_tag() }} 
+                
+                <div>
+                    {{ form.name.label(class="form-label") }}
+                    {{ form.name(class="form-input", placeholder="Your Name") }}
+                    {% for error in form.name.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                
+                <div>
+                    {{ form.email.label(class="form-label") }}
+                    {{ form.email(class="form-input", placeholder="Your Email") }}
+                    {% for error in form.email.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                
+                <div>
+                    {{ form.subject.label(class="form-label") }}
+                    {{ form.subject(class="form-input", placeholder="Subject of the Complaint") }}
+                    {% for error in form.subject.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                
+                <div>
+                    {{ form.description.label(class="form-label") }}
+                    {{ form.description(class="form-textarea", placeholder="Please describe your complaint") }}
+                    {% for error in form.description.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    <label class="form-label">Priority</label>
+                    {{ form.priority(class="form-input") }}  
+                </div>
+                
+                <button type="submit" class="submit-btn">Submit Complaint</button>
+            </form>
+        </div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <script>
+        setTimeout(function() {
+            var flashMessages = document.querySelectorAll('.flash');
+            flashMessages.forEach(function(message) {
+                message.style.transition = "opacity 0.5s ease";
+                message.style.opacity = "0"; 
+                setTimeout(function() {
+                    message.remove();  // Remove the message after fade-out
+                }, 500);  
+            });
+        }, 2000);  
+    </script>
+    </main>
+    <footer>
+        <p>&copy; {{ current_year }} Small Arms Factory Kanpur. All rights reserved.</p>
+    </footer>
+</body>
+</html>
