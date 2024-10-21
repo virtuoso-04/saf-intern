@@ -5,6 +5,10 @@ from wtforms import StringField, TextAreaField, SubmitField, RadioField
 from wtforms.validators import DataRequired, Email
 
 app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Hello, Render!"
 app.config['SECRET_KEY'] = 'FIREINPANTS'  
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///small_arms.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
